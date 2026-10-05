@@ -11,3 +11,9 @@ data/nine_books.xlsx
 backend/skipped_rows.csv
 data/narrators.xlsx
 data/takhreeg.xlsx
+backend/venv/
+venv/
+.venv/
+*.save
+*.orig
+backend/phrases.csv
