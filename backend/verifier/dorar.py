@@ -7,6 +7,7 @@
 """
 import html
 import logging
+import os
 import re
 from dataclasses import asdict, dataclass
 from datetime import timedelta
@@ -88,6 +89,32 @@ def _cfg():
     return settings.MUTHBIT
 
 
+def _force_ipv4_if_configured():
+    """بعض الخوادم لها عنوان IPv6 بلا مسار فعلي للخارج، فتتعلق الطلبات حتى المهلة."""
+    if os.environ.get("MUTHBIT_FORCE_IPV4") == "1":
+        import socket
+        import urllib3.util.connection as uc
+        uc.allowed_gai_family = lambda: socket.AF_INET
+
+
+def request_api(query: str, timeout: int) -> dict:
+    """طلب واحد لخدمة الدرر، مع رسالة خطأ تبيّن السبب (اتصال، حجب، استجابة غير JSON)."""
+    _force_ipv4_if_configured()
+    try:
+        r = requests.get(API_URL, params={"skey": query}, timeout=timeout,
+                         headers={"User-Agent": "Muthbit/0.1 (hadith verification tool)",
+                                  "Accept": "application/json"})
+    except requests.RequestException as exc:
+        raise DorarUnavailable(f"{type(exc).__name__}: {exc}") from exc
+    if not r.ok:
+        raise DorarUnavailable(f"HTTP {r.status_code}: {r.text[:200]!r}")
+    try:
+        return r.json()
+    except ValueError as exc:
+        kind = r.headers.get("content-type", "?")
+        raise DorarUnavailable(f"استجابة ليست JSON ({kind}): {r.text[:200]!r}") from exc
+
+
 def fetch(query: str) -> list[DorarHadith]:
     """يستعلم من الدرر مع ذاكرة مؤقتة في قاعدة البيانات."""
     from .models import DorarCache
@@ -97,14 +124,11 @@ def fetch(query: str) -> list[DorarHadith]:
     if cached and timezone.now() - cached.fetched_at < ttl:
         return [DorarHadith(**h) for h in cached.results]
     try:
-        r = requests.get(API_URL, params={"skey": query}, timeout=c["DORAR_TIMEOUT"],
-                         headers={"User-Agent": "Muthbit/0.1 (hadith verification tool)"})
-        r.raise_for_status()
-        data = r.json()
-    except (requests.RequestException, ValueError) as exc:
+        data = request_api(query, c["DORAR_TIMEOUT"])
+    except DorarUnavailable:
         if cached:  # نسخة قديمة أفضل من لا شيء
             return [DorarHadith(**h) for h in cached.results]
-        raise DorarUnavailable(str(exc)) from exc
+        raise
     items = parse_result_html((data.get("ahadith") or {}).get("result", ""))
     DorarCache.objects.update_or_create(query=query, defaults={"results": [asdict(h) for h in items]})
     return items

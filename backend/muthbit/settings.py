@@ -65,6 +65,10 @@ CORS_ALLOWED_ORIGINS = [o for o in os.environ.get("CORS_ALLOWED_ORIGINS", "http:
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    # الواجهة البرمجية عامة لا تحتاج تسجيل دخول. بدون هذا، من سجّل الدخول إلى /admin
+    # على النطاق نفسه يُصادَق بالجلسة فيطلب DRF رمز CSRF ويرفض الطلب.
+    "DEFAULT_AUTHENTICATION_CLASSES": [],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.AllowAny"],
     "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle"],
     "DEFAULT_THROTTLE_RATES": {"anon": os.environ.get("THROTTLE_RATE", "60/min")},
 }

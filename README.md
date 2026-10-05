@@ -50,7 +50,7 @@ python manage.py import_isnad_data --narrators ..\data\narrators.xlsx --takhreeg
 python manage.py build_index
 ```
 
-منطق الأسانيد والشجرة مأخوذ من تطبيق «موسوعة الحديث الشريف - الكتب التسعة» لصاحب المشروع.
+بيانات الكتب التسعة والأسانيد والرواة والتخريج من مستودع «الكشاف» لعمر شافعي (https://github.com/OmarShafie/hadith)، ودرجات الرواة فيه من تقريب التهذيب لابن حجر. انظر `SOURCES.md` للترخيص والاستشهاد.
 
 ## القرآن الكريم
 
@@ -171,6 +171,14 @@ python evaluate.py --xlsx muthbit_test_set.xlsx --api http://127.0.0.1:8000 \
 `--baseline-model gemini-3.1-flash-lite --baseline-base-url https://generativelanguage.googleapis.com/v1beta/openai/ --baseline-key-env GEMINI_API_KEY`
 
 يُخرج `reports/report.md` بالمقاييس التالية لمُثبِت وللنموذج العام: مطابقة المخرج المتوقع، والأخطاء الحرجة (تأكيد ما لا يصح)، وصحة الإسناد، والمصادر المختلقة، ودقة الامتناع واستدعاؤه، وثبات المخرج عبر التكرارات، ونسبة استخراج النصوص من المنشورات المركبة. الخيار `--sweep --split` يضبط العتبات على نصف المجموعة ويقيس على النصف الآخر حتى لا تُبالغ النتيجة.
+
+## فحص الخادم
+
+```bash
+sudo -u www-data /path/to/.venv/bin/python manage.py doctor
+```
+
+يفحص القاعدة وصلاحيات الكتابة عليها، والفهرس وبحثاً تجريبياً، والاتصال بالدرر مع سبب الفشل إن وقع، ومفاتيح النماذج. شغّله بمستخدم الخادم نفسه.
 
 ## النشر
 

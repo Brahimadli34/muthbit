@@ -256,3 +256,4 @@ class Narrator(models.Model):
 
     def __str__(self):
         return self.name[:80]
+
