@@ -7,7 +7,5 @@ backend/staticfiles/
 frontend/node_modules/
 frontend/dist/
 eval/reports/
-data/nine_books.xlsx
 backend/skipped_rows.csv
-data/narrators.xlsx
-data/takhreeg.xlsx
+
