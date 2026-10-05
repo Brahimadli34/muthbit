@@ -1,0 +1,27 @@
+# نشر الخلفية على Render (الخطة المجانية تتوقف عند الخمول: افتح الرابط قبل التحكيم)
+services:
+  - type: web
+    name: muthbit-api
+    runtime: python
+    rootDir: backend
+    buildCommand: >
+      pip install -r requirements.txt &&
+      python manage.py collectstatic --noinput &&
+      python manage.py migrate &&
+      python manage.py import_sources ../data/sources.csv --replace &&
+      python manage.py build_index &&
+      python manage.py import_grade_map ../data/grade_map.csv --if-empty
+    startCommand: gunicorn muthbit.wsgi --workers 2 --timeout 120
+    envVars:
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "*"
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false   # رابط الواجهة على Netlify
+      - key: GEMINI_API_KEY      # أو أي اسم كتبته في حقل «اسم متغير البيئة»
+        sync: false
+      - key: DATABASE_URL        # PostgreSQL لحفظ إعدادات النماذج والبلاغات بين إعادات التشغيل
+        sync: false

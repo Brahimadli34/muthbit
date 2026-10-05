@@ -1,0 +1,269 @@
+:root {
+  --paper: #edf1ef;
+  --sheet: #f8faf9;
+  --ink: #17262b;
+  --muted: #5c6b70;
+  --rule: #c9d3cf;
+  --focus: #1f5f7a;
+
+  --confirm: #2e6b4e;
+  --wording: #2f6385;
+  --daif: #8a5a0e;
+  --mawdu: #9c2f2f;
+  --abstain: #56626b;
+  --conflict: #5e4591;
+  --attrib: #6f5327;
+  --isnad: #4d6a2f;
+  --narrated: #6a5d4d;
+  --n-thiqa: #2e6b4e;
+  --n-saduq: #a07a1c;
+  --n-weak: #9c2f2f;
+  --n-majhul: #6b5a8e;
+  --n-unknown: #9aa5a9;
+
+  --ui: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  --naskh: "Amiri", "Traditional Arabic", "Times New Roman", serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.7 var(--ui);
+}
+
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 4rem;
+}
+
+/* ---------- الرأس ---------- */
+.masthead { margin-bottom: 2rem; }
+.wordmark {
+  font: 700 4.5rem/1 var(--naskh);
+  margin: 0 0 0.75rem;
+  letter-spacing: 0;
+}
+.lede {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--muted);
+  font-size: 1.0625rem;
+}
+
+/* ---------- الإدخال ---------- */
+.composer {
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 1.25rem;
+}
+.composer-label { display: block; font-weight: 600; margin-bottom: 0.5rem; }
+textarea {
+  width: 100%;
+  resize: vertical;
+  font: 400 1.125rem/1.8 var(--naskh);
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.75rem 0.875rem;
+}
+.composer-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.875rem;
+  flex-wrap: wrap;
+}
+.counter { margin-inline-start: auto; color: var(--muted); font-size: 0.8125rem; }
+
+button { font: inherit; cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: 0.55; }
+.primary {
+  background: var(--ink);
+  color: #fff;
+  border: 0;
+  border-radius: 4px;
+  padding: 0.625rem 1.375rem;
+  font-weight: 600;
+}
+.secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 4px;
+  padding: 0.375rem 1rem;
+}
+.link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--focus);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+/* ---------- النتائج ---------- */
+.results { margin-top: 2.5rem; outline: none; }
+.summary { color: var(--muted); margin: 0 0 1rem; }
+.notice {
+  border: 1px solid var(--rule);
+  background: var(--sheet);
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+}
+.notice.error { border-color: var(--mawdu); color: var(--mawdu); }
+
+/* بطاقة النتيجة على هيئة حاشية تخريج: هامش ملوّن بحسب الحكم */
+.result {
+  --tone: var(--abstain);
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-inline-start: 6px solid var(--tone);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem 1rem;
+  margin-bottom: 1.25rem;
+}
+.tone-confirm { --tone: var(--confirm); }
+.tone-wording { --tone: var(--wording); }
+.tone-daif { --tone: var(--daif); }
+.tone-mawdu { --tone: var(--mawdu); }
+.tone-abstain { --tone: var(--abstain); }
+.tone-conflict { --tone: var(--conflict); }
+.tone-attrib { --tone: var(--attrib); }
+.tone-isnad { --tone: var(--isnad); }
+.tone-narrated { --tone: var(--narrated); }
+.note { margin: -0.5rem 0 1rem; font-size: 0.875rem; color: var(--muted); }
+
+.circulated {
+  margin: 0 0 1rem;
+  padding: 0;
+  color: var(--muted);
+  font: 400 1rem/1.8 var(--naskh);
+}
+.circulated-label {
+  display: block;
+  font: 500 0.8125rem/1.4 var(--ui);
+  margin-bottom: 0.125rem;
+}
+.verdict {
+  margin: 0;
+  color: var(--tone);
+  font: 600 1.25rem/1.4 var(--ui);
+}
+.summary-line { margin: 0.25rem 0 0; font: 600 1.0625rem/1.6 var(--ui); }
+.explanation { margin: 0.25rem 0 1rem; max-width: 36rem; }
+
+.original {
+  font: 400 1.5rem/2 var(--naskh);
+  margin: 0 0 1rem;
+  padding-block: 0.75rem;
+  border-block: 1px solid var(--rule);
+}
+.original.small { font-size: 1.1875rem; border: 0; padding: 0; margin: 0.75rem 0 0.5rem; }
+
+.takhrij { margin: 0; display: grid; gap: 0.375rem; }
+.takhrij > div { display: grid; grid-template-columns: 7rem 1fr; gap: 0.75rem; }
+.takhrij dt { color: var(--muted); font-size: 0.875rem; padding-top: 0.125rem; }
+.takhrij dd { margin: 0; }
+.grades { margin: 0; padding: 0; list-style: none; }
+.muted { color: var(--muted); }
+
+.alternatives { margin-top: 1rem; }
+.alternatives summary { cursor: pointer; color: var(--focus); }
+.alt { padding-top: 0.5rem; border-top: 1px dashed var(--rule); margin-top: 0.75rem; }
+
+.card-foot { margin-top: 1rem; font-size: 0.875rem; }
+.report { margin-top: 0.75rem; }
+.report label { display: block; font-size: 0.875rem; margin-bottom: 0.25rem; }
+.report textarea { font: 400 0.9375rem/1.6 var(--ui); }
+.report-actions { display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem; }
+.report-done { color: var(--confirm); font-size: 0.875rem; }
+.error-inline { color: var(--mawdu); font-size: 0.875rem; }
+
+.disclaimer {
+  color: var(--muted);
+  font-size: 0.875rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+
+/* ---------- التذييل ---------- */
+.colophon { margin-top: 3.5rem; font-size: 0.9375rem; }
+.colophon h2 { font: 600 1rem/1.4 var(--ui); margin: 0 0 0.5rem; }
+.colophon ul { margin: 0; padding-inline-start: 1.25rem; }
+
+@media (max-width: 34rem) {
+  .page { padding-top: 2rem; }
+  .wordmark { font-size: 3.5rem; }
+  .result { padding: 1rem 1rem 0.75rem; }
+  .takhrij > div { grid-template-columns: 1fr; gap: 0; }
+  .original { font-size: 1.3125rem; }
+}
+
+/* ---------- وضع المتخصص ---------- */
+.masthead-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.switch { display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9375rem;
+  border: 1px solid var(--rule); background: var(--sheet); border-radius: 999px; padding: 0.375rem 0.875rem; }
+.switch input { accent-color: var(--ink); width: 1rem; height: 1rem; }
+.small { font-size: 0.8125rem; }
+
+.specialist-bar { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; }
+.isnad-panel { margin-top: 1rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+.isnad-panel h4 { margin: 0 0 0.5rem; font: 600 0.9375rem/1.5 var(--ui); }
+.isnad-panel h5 { margin: 0 0 0.5rem; font: 600 0.875rem/1.5 var(--ui); display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.full-text { font: 400 1.125rem/2 var(--naskh); margin: 0 0 1rem; max-height: 16rem; overflow-y: auto;
+  background: #fff; border: 1px solid var(--rule); border-radius: 4px; padding: 0.75rem 1rem; }
+
+.tabs { display: flex; gap: 0.25rem; border-bottom: 1px solid var(--rule); margin-bottom: 0.875rem; }
+.tabs button { background: none; border: 0; padding: 0.5rem 0.875rem; color: var(--muted);
+  border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); font-weight: 600; }
+
+.route-group { margin-bottom: 1.25rem; }
+.chain { margin-bottom: 0.625rem; }
+.chain-people { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0; }
+.chain-people li { display: flex; align-items: center; }
+.chain-people li + li::before { content: "←"; color: var(--muted); margin: 0 0.25rem; font-size: 0.8125rem; }
+.narrator { display: inline-flex; align-items: center; gap: 0.375rem; background: #fff; border: 1px solid var(--rule);
+  border-radius: 999px; padding: 0.1875rem 0.625rem; font-size: 0.8125rem; color: var(--ink); }
+.narrator[aria-expanded="true"] { border-color: var(--ink); }
+.narrator.tone-n-weak { border-color: var(--n-weak); }
+.dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; display: inline-block; flex: none; background: var(--n-unknown); }
+.tone-n-thiqa .dot, .dot.tone-n-thiqa { background: var(--n-thiqa); }
+.tone-n-saduq .dot, .dot.tone-n-saduq { background: var(--n-saduq); }
+.tone-n-weak .dot, .dot.tone-n-weak { background: var(--n-weak); }
+.tone-n-majhul .dot, .dot.tone-n-majhul { background: var(--n-majhul); }
+.narrator.tone-n-majhul { border-color: var(--n-majhul); }
+.chain-flag.majhul { color: var(--n-majhul); }
+.narrator-detail { margin-top: 0.375rem; display: grid; gap: 0.125rem; font-size: 0.875rem;
+  background: #fff; border: 1px solid var(--rule); border-radius: 4px; padding: 0.5rem 0.75rem; }
+.chain-flag { margin: 0.25rem 0 0; font-size: 0.8125rem; color: var(--n-weak); }
+.book-tag { font: 500 0.75rem/1.4 var(--ui); background: var(--paper); border: 1px solid var(--rule);
+  border-radius: 999px; padding: 0.0625rem 0.5rem; color: var(--muted); }
+
+.tree { overflow-x: auto; }
+.madar { margin: 0 0 0.25rem; }
+.tree-root, .tree-children { list-style: none; margin: 0; padding: 0; }
+.tree-children { border-inline-start: 2px solid var(--rule); margin-inline-start: 0.5rem; padding-inline-start: 0.875rem; }
+.tree-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.125rem 0; font-size: 0.875rem; white-space: nowrap; }
+.tree-toggle { width: 1rem; height: 1rem; flex: none; background: none; border: 0; padding: 0; color: var(--muted); line-height: 1; }
+
+.legend { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; font-size: 0.8125rem; color: var(--muted); }
+.legend > span { display: inline-flex; align-items: center; gap: 0.375rem; }
+
+/* ---------- طرق المتن ---------- */
+.matn-routes { margin-top: 1.25rem; border-top: 1px solid var(--rule); padding-top: 1rem; }
+.matn-routes h4 { margin: 0 0 0.375rem; font: 600 1rem/1.5 var(--ui); }
+.matn-summary { margin: 0 0 0.75rem; font-size: 0.9375rem; }
+.matn-routes ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.75rem; }
+.matn-route { border-inline-start: 3px solid var(--tone, var(--abstain)); background: #fff;
+  border-radius: 4px; padding: 0.625rem 0.875rem; }
+.matn-route-head { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.matn-route-verdict { margin: 0.25rem 0 0; color: var(--tone, var(--abstain)); font-weight: 600; font-size: 0.9375rem; }
+.matn-route-verdict span { color: var(--ink); font-weight: 400; }
